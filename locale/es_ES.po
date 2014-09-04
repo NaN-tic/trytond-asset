@@ -1,0 +1,135 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "error:asset:"
+msgid "The code of the asset must be unique."
+msgstr "El código del activo debe ser único."
+
+msgctxt "field:asset,active:"
+msgid "Active"
+msgstr "Activo"
+
+msgctxt "field:asset,code:"
+msgid "Code"
+msgstr "Código"
+
+msgctxt "field:asset,code_readonly:"
+msgid "Code Readonly"
+msgstr "Código solo lectura"
+
+msgctxt "field:asset,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:asset,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:asset,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:asset,name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:asset,product:"
+msgid "Product"
+msgstr "Productos"
+
+msgctxt "field:asset,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:asset,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:asset,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:asset.configuration,asset_sequence:"
+msgid "Asset Sequence"
+msgstr "Sequencia activos"
+
+msgctxt "field:asset.configuration,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:asset.configuration,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:asset.configuration,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:asset.configuration,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:asset.configuration,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:asset.configuration,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "model:asset,name:"
+msgid "Asset"
+msgstr "Activo"
+
+msgctxt "model:asset.configuration,name:"
+msgid "Asset Configuration"
+msgstr "Configuración activos"
+
+msgctxt "model:ir.action,name:act_asset"
+msgid "Asset"
+msgstr "Activo"
+
+msgctxt "model:ir.action,name:act_asset_configuration_form"
+msgid "Asset Configuration"
+msgstr "Configuración activos"
+
+msgctxt "model:ir.sequence,name:sequence_asset"
+msgid "Asset"
+msgstr "Activo"
+
+msgctxt "model:ir.sequence.type,name:sequence_type_asset"
+msgid "Asset"
+msgstr "Activo"
+
+msgctxt "model:ir.ui.menu,name:menu_asset"
+msgid "Asset"
+msgstr "Activo"
+
+msgctxt "model:ir.ui.menu,name:menu_asset_configuration"
+msgid "Asset Configuration"
+msgstr "Configuración activos"
+
+msgctxt "model:ir.ui.menu,name:menu_asset_form"
+msgid "Assets"
+msgstr "Activos"
+
+msgctxt "model:ir.ui.menu,name:menu_configuration"
+msgid "Configuration"
+msgstr "Configuración"
+
+msgctxt "model:res.group,name:group_asset"
+msgid "Asset"
+msgstr "Activos"
+
+msgctxt "model:res.group,name:group_asset_admin"
+msgid "Asset Administration"
+msgstr "Administración de activos"
+
+msgctxt "view:asset.configuration:"
+msgid "Asset Configuration"
+msgstr "Configuración activos"
+
+msgctxt "view:asset:"
+msgid "Asset"
+msgstr "Activo"

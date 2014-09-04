@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tryton>
+    <data>
+
+        <record model="res.group" id="group_asset">
+            <field name="name">Asset</field>
+        </record>
+        <record model="res.user-res.group" id="user_admin_group_asset">
+            <field name="user" ref="res.user_admin"/>
+            <field name="group" ref="group_asset"/>
+        </record>
+        <record model="res.user-res.group" id="user_trigger_group_asset">
+            <field name="user" ref="res.user_trigger"/>
+            <field name="group" ref="group_asset"/>
+        </record>
+
+        <record model="res.group" id="group_asset_admin">
+            <field name="name">Asset Administration</field>
+        </record>
+        <record model="res.user-res.group" id="user_admin_group_asset_admin">
+            <field name="user" ref="res.user_admin"/>
+            <field name="group" ref="group_asset_admin"/>
+        </record>
+        <record model="res.user-res.group" id="user_trigger_group_asset_admin">
+            <field name="user" ref="res.user_trigger"/>
+            <field name="group" ref="group_asset_admin"/>
+        </record>
+
+        <record model="ir.ui.view" id="asset_view_form">
+            <field name="model">asset</field>
+            <field name="type">form</field>
+            <field name="name">asset_form</field>
+        </record>
+        <record model="ir.ui.view" id="asset_view_list">
+            <field name="model">asset</field>
+            <field name="type">tree</field>
+            <field name="name">asset_list</field>
+        </record>
+        <record model="ir.action.act_window" id="act_asset">
+            <field name="name">Asset</field>
+            <field name="res_model">asset</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_asset_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="asset_view_list"/>
+            <field name="act_window" ref="act_asset"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_asset_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="asset_view_form"/>
+            <field name="act_window" ref="act_asset"/>
+        </record>
+        <record model="ir.model.access" id="access_asset">
+            <field name="model" search="[('model', '=', 'asset')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_asset_group_asset">
+            <field name="model" search="[('model', '=', 'asset')]"/>
+            <field name="group" ref="group_asset"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+
+
+        <!-- Menus -->
+        <menuitem id="menu_asset" name="Asset" sequence="1" />
+
+        <record model="ir.ui.menu-res.group" id="menu_asset_group_asset">
+            <field name="menu" ref="menu_asset"/>
+            <field name="group" ref="group_asset"/>
+        </record>
+
+        <menuitem action="act_asset" id="menu_asset_form"
+            parent="menu_asset" sequence="10" name="Assets"/>
+
+        <menuitem id="menu_configuration" parent="menu_asset"
+            name="Configuration" icon="tryton-preferences" sequence="0"/>
+
+        <record model="ir.ui.menu-res.group"
+                id="menu_configuration_group_asset_admin">
+            <field name="menu" ref="menu_configuration"/>
+            <field name="group" ref="group_asset_admin"/>
+        </record>
+
+
+        <record model="ir.sequence.type" id="sequence_type_asset">
+            <field name="name">Asset</field>
+            <field name="code">asset</field>
+        </record>
+        <record model="ir.sequence.type-res.group"
+            id="sequence_type_asset_group_admin">
+            <field name="sequence_type" ref="sequence_type_asset"/>
+            <field name="group" ref="res.group_admin"/>
+        </record>
+        <record model="ir.sequence.type-res.group"
+            id="sequence_type_asset_group_asset_admin">
+            <field name="sequence_type" ref="sequence_type_asset"/>
+            <field name="group" ref="group_asset"/>
+        </record>
+
+        <record model="ir.sequence" id="sequence_asset">
+            <field name="name">Asset</field>
+            <field name="code">asset</field>
+        </record>
+    </data>
+</tryton>

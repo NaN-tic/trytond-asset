@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<tryton>
+    <data>
+        <record model="ir.ui.view" id="asset_configuration_view_form">
+            <field name="model">asset.configuration</field>
+            <field name="type">form</field>
+            <field name="name">configuration_form</field>
+        </record>
+        <record model="ir.action.act_window" id="act_asset_configuration_form">
+            <field name="name">Asset Configuration</field>
+            <field name="res_model">asset.configuration</field>
+        </record>
+        <record model="ir.action.act_window.view"
+            id="act_asset_configuration_view1">
+            <field name="sequence" eval="1"/>
+            <field name="view" ref="asset_configuration_view_form"/>
+            <field name="act_window" ref="act_asset_configuration_form"/>
+        </record>
+        <menuitem parent="menu_configuration"
+            action="act_asset_configuration_form"
+            id="menu_asset_configuration"
+            sequence="0" icon="tryton-list"/>
+        <record model="ir.property" id="property_asset_sequence">
+            <field name="field"
+                search="[('model.model', '=', 'asset.configuration'), ('name', '=', 'asset_sequence')]"/>
+            <field name="value" eval="'ir.sequence,' + str(ref('sequence_asset'))"/>
+        </record>
+    </data>
+</tryton>
