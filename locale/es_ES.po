@@ -16,7 +16,7 @@ msgstr "Código"
 
 msgctxt "field:asset,code_readonly:"
 msgid "Code Readonly"
-msgstr "Código solo lectura"
+msgstr "Código sólo lectura"
 
 msgctxt "field:asset,create_date:"
 msgid "Create Date"
@@ -36,7 +36,7 @@ msgstr "Nombre"
 
 msgctxt "field:asset,product:"
 msgid "Product"
-msgstr "Productos"
+msgstr "Producto"
 
 msgctxt "field:asset,rec_name:"
 msgid "Name"
