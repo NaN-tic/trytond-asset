@@ -104,7 +104,7 @@ msgstr "Actiu"
 
 msgctxt "model:ir.ui.menu,name:menu_asset"
 msgid "Asset"
-msgstr "Actiu"
+msgstr "Actius"
 
 msgctxt "model:ir.ui.menu,name:menu_asset_configuration"
 msgid "Asset Configuration"

@@ -104,7 +104,7 @@ msgstr "Activo"
 
 msgctxt "model:ir.ui.menu,name:menu_asset"
 msgid "Asset"
-msgstr "Activo"
+msgstr "Activos"
 
 msgctxt "model:ir.ui.menu,name:menu_asset_configuration"
 msgid "Asset Configuration"
