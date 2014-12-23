@@ -42,6 +42,10 @@ msgctxt "field:asset,rec_name:"
 msgid "Name"
 msgstr "Nombre"
 
+msgctxt "field:asset,type:"
+msgid "Type"
+msgstr "Tipo"
+
 msgctxt "field:asset,write_date:"
 msgid "Write Date"
 msgstr "Fecha modificación"
@@ -125,6 +129,10 @@ msgstr "Activos"
 msgctxt "model:res.group,name:group_asset_admin"
 msgid "Asset Administration"
 msgstr "Administración de activos"
+
+msgctxt "selection:asset,type:"
+msgid ""
+msgstr ""
 
 msgctxt "view:asset.configuration:"
 msgid "Asset Configuration"

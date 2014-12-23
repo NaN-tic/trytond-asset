@@ -3,6 +3,7 @@
 from trytond.pool import Pool
 from trytond.model import ModelSQL, ModelView, fields
 from trytond.pyson import Eval
+from trytond.transaction import Transaction
 
 __all__ = ['Asset']
 
@@ -22,6 +23,9 @@ class Asset(ModelSQL, ModelView):
         domain=[
             ('type', '=', 'assets'),
             ])
+    type = fields.Selection([
+            ('', ''),
+            ], 'Type', select=True)
     active = fields.Boolean('Active')
 
     @classmethod
@@ -41,6 +45,10 @@ class Asset(ModelSQL, ModelView):
         Configuration = Pool().get('asset.configuration')
         config = Configuration(1)
         return bool(config.asset_sequence)
+
+    @staticmethod
+    def default_type():
+        return Transaction().context.get('type', '')
 
     def get_code_readonly(self, name):
         return True
