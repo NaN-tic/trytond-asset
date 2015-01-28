@@ -19,9 +19,9 @@ class Asset(ModelSQL, ModelView):
         depends=['code_readonly'])
     code_readonly = fields.Function(fields.Boolean('Code Readonly'),
         'get_code_readonly')
-    product = fields.Many2One('product.product', 'Product', required=True,
+    product = fields.Many2One('product.product', 'Product',
         domain=[
-            ('type', '=', 'assets'),
+            ('type', 'in', ['assets', 'goods']),
             ])
     type = fields.Selection([
             ('', ''),
