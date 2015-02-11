@@ -11,7 +11,7 @@ __all__ = ['Asset']
 class Asset(ModelSQL, ModelView):
     'Asset'
     __name__ = 'asset'
-    name = fields.Char('Name', required=True, select=True)
+    name = fields.Char('Name')
     code = fields.Char('Code', required=True, select=True,
         states={
             'readonly': Eval('code_readonly', True),
@@ -71,3 +71,10 @@ class Asset(ModelSQL, ModelView):
                 config = Configuration(1)
                 values['code'] = Sequence.get_id(config.asset_sequence.id)
         return super(Asset, cls).create(vlist)
+
+    @classmethod
+    def copy(cls, assets, default=None):
+        if default is None:
+            default = {}
+        default.setdefault('code', None)
+        return super(Asset, cls).copy(assets, default=default)
