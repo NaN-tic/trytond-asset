@@ -36,6 +36,19 @@ class Asset(ModelSQL, ModelView):
                 'The code of the asset must be unique.')
             ]
 
+    def get_rec_name(self, name):
+        name = '[%s]' % self.code
+        if self.name:
+            name += ' %s' % self.name
+        return name
+
+    @classmethod
+    def search_rec_name(cls, name, clause):
+        return ['OR',
+            ('code',) + tuple(clause[1:]),
+            ('name',) + tuple(clause[1:]),
+            ]
+
     @staticmethod
     def default_active():
         return True
