@@ -29,7 +29,7 @@ dirección y referencia del propietario, entre muchos otros atributos.
 
 
 .. |menu_asset| tryref:: asset.menu_asset/complete_name   
-.. |asset| field:: asset.asset/name
+
 
 
 
