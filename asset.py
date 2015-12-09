@@ -1,7 +1,7 @@
 #This file is part of Tryton.  The COPYRIGHT file at the top level of
 #this repository contains the full copyright notices and license terms.
 from trytond.pool import Pool
-from trytond.model import ModelSQL, ModelView, fields
+from trytond.model import ModelSQL, ModelView, fields, Unique
 from trytond.pyson import Eval
 from trytond.transaction import Transaction
 
@@ -31,8 +31,9 @@ class Asset(ModelSQL, ModelView):
     @classmethod
     def __setup__(cls):
         super(Asset, cls).__setup__()
+        t = cls.__table__()
         cls._sql_constraints = [
-            ('code_uniq', 'UNIQUE(code)',
+            ('code_uniq', Unique(t, t.code),
                 'The code of the asset must be unique.')
             ]
 
@@ -65,13 +66,6 @@ class Asset(ModelSQL, ModelView):
 
     def get_code_readonly(self, name):
         return True
-
-    @classmethod
-    def search_rec_name(cls, name, clause):
-        return ['OR',
-            ('code',) + tuple(clause[1:]),
-            ('name',) + tuple(clause[1:]),
-            ]
 
     @classmethod
     def create(cls, vlist):
