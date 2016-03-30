@@ -2,6 +2,10 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "error:asset.address:"
+msgid "\"%(first)s\" and \"%(second)s\" assigmentoverlap."
+msgstr "\"%(first)s\" i \"%(second)s\" es solapen."
+
 msgctxt "error:asset:"
 msgid "The code of the asset must be unique."
 msgstr "El codi de l'actiu ha de ser únic."
@@ -30,6 +34,14 @@ msgctxt "field:asset,create_uid:"
 msgid "Create User"
 msgstr "Usuari creació"
 
+msgctxt "field:asset,current_address:"
+msgid "Current Address"
+msgstr "Adreça"
+
+msgctxt "field:asset,current_contact:"
+msgid "Current Contact"
+msgstr "Contacte"
+
 msgctxt "field:asset,id:"
 msgid "ID"
 msgstr "ID"
@@ -55,6 +67,50 @@ msgid "Write Date"
 msgstr "Data modificació"
 
 msgctxt "field:asset,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:asset.address,address:"
+msgid "Address"
+msgstr "Adreça"
+
+msgctxt "field:asset.address,asset:"
+msgid "Asset"
+msgstr "Actius"
+
+msgctxt "field:asset.address,contact:"
+msgid "Contact"
+msgstr "Contacte"
+
+msgctxt "field:asset.address,create_date:"
+msgid "Create Date"
+msgstr "Data creació"
+
+msgctxt "field:asset.address,create_uid:"
+msgid "Create User"
+msgstr "Usuari de creació"
+
+msgctxt "field:asset.address,from_date:"
+msgid "From Date"
+msgstr "Data inicial"
+
+msgctxt "field:asset.address,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:asset.address,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:asset.address,through_date:"
+msgid "Through Date"
+msgstr "Fins Data"
+
+msgctxt "field:asset.address,write_date:"
+msgid "Write Date"
+msgstr "Usuari creació"
+
+msgctxt "field:asset.address,write_uid:"
 msgid "Write User"
 msgstr "Usuari modificació"
 
@@ -90,7 +146,15 @@ msgctxt "model:asset,name:"
 msgid "Asset"
 msgstr "Actiu"
 
+msgctxt "model:asset.address,name:"
+msgid "Asset Address"
+msgstr "Adreça"
+
 msgctxt "model:asset.configuration,name:"
+msgid "Asset Configuration"
+msgstr "Configuració actius"
+
+msgctxt "model:ir.action,name:None"
 msgid "Asset Configuration"
 msgstr "Configuració actius"
 
@@ -138,9 +202,17 @@ msgctxt "selection:asset,type:"
 msgid ""
 msgstr " "
 
+msgctxt "view:asset.address:"
+msgid "Asset Address"
+msgstr "Adreça"
+
 msgctxt "view:asset.configuration:"
 msgid "Asset Configuration"
 msgstr "Configuració actius"
+
+msgctxt "view:asset:"
+msgid "Address"
+msgstr "Adreça"
 
 msgctxt "view:asset:"
 msgid "Asset"
