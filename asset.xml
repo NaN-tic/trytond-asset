@@ -36,10 +36,18 @@
             <field name="type">tree</field>
             <field name="name">asset_list</field>
         </record>
+
+        <record model="ir.ui.view" id="asset_address_view_list">
+            <field name="model">asset.address</field>
+            <field name="type">tree</field>
+            <field name="name">asset_address_list</field>
+        </record>
+
         <record model="ir.action.act_window" id="act_asset">
             <field name="name">Asset</field>
             <field name="res_model">asset</field>
         </record>
+
         <record model="ir.action.act_window.view" id="act_asset_view1">
             <field name="sequence" eval="10"/>
             <field name="view" ref="asset_view_list"/>
