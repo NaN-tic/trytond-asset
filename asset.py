@@ -5,23 +5,61 @@ from trytond.model import ModelSQL, ModelView, fields, Unique
 from trytond.pyson import Eval, If
 from trytond.transaction import Transaction
 from trytond import backend
+from trytond.pyson import Date
+
 
 __all__ = ['Asset', 'AssetAddress']
 
 
-class AssetAssigmentMixin:
+class AssetAssigmentMixin(ModelSQL, ModelView):
+
     from_date = fields.Date('From Date', required=True)
     through_date = fields.Date('Through Date')
 
+    @classmethod
+    def validate(cls, assigments):
+        super(AssetAssigmentMixin, cls).validate(assigments)
+        for assigment in assigments:
+            assigment.check_dates()
 
-class AssetAddress(ModelSQL, ModelView, AssetAssigmentMixin):
+    @classmethod
+    def __setup__(cls):
+        super(AssetAssigmentMixin, cls).__setup__()
+        cls._order.insert(0, ('from_date', 'DESC'))
+        cls._error_messages.update({
+            'dates_overlaps': ('"%(first)s" and "%(second)s" assigment'
+                'overlap.'),
+            })
+
+    def check_dates(self):
+        cursor = Transaction().cursor
+        table = self.__table__()
+        cursor.execute(*table.select(table.id,
+                where=(((table.from_date <= self.from_date)
+                        & (table.through_date >= self.from_date))
+                    | ((table.from_date <= self.through_date)
+                        & (table.through_date >= self.through_date))
+                    | ((table.from_date >= self.from_date)
+                        & (table.through_date <= self.through_date)))
+                & (table.asset == self.asset.id)
+                & (table.id != self.id)))
+        assigment = cursor.fetchone()
+        if assigment:
+            overlapping_period = self.__class__(assigment[0])
+            self.raise_user_error('dates_overlaps', {
+                    'first': self.rec_name,
+                    'second': overlapping_period.rec_name,
+                    })
+
+
+class AssetAddress(AssetAssigmentMixin):
     'Asset Address'
 
     __name__ = 'asset.address'
 
-    address = fields.Many2One('party.address', 'Address')
+    address = fields.Many2One('party.address', 'Address', required=True)
     contact = fields.Many2One('party.party', 'Contact')
-    asset = fields.Many2One('asset', 'Asset')
+    asset = fields.Many2One('asset', 'Asset', required=True)
 
 
 class Asset(ModelSQL, ModelView):
@@ -50,6 +88,10 @@ class Asset(ModelSQL, ModelView):
             ], 'Type', select=True)
     active = fields.Boolean('Active')
     address = fields.One2Many('asset.address', 'asset', 'Address')
+    current_address = fields.Function(fields.Many2One('party.address',
+        'Current Address'), 'get_current_address')
+    current_contact = fields.Function(fields.Many2One('party.party',
+        'Current Contact'), 'get_current_address')
 
     @classmethod
     def __setup__(cls):
@@ -91,6 +133,41 @@ class Asset(ModelSQL, ModelView):
             ('code',) + tuple(clause[1:]),
             ('name',) + tuple(clause[1:]),
             ]
+
+    @classmethod
+    def get_current_values(cls, assets, Class):
+        Date_ = Pool().get('ir.date')
+        today = Date_.today()
+        cursor = Transaction().cursor
+        table = Class.__table__()
+        cursor.execute(*table.select(
+                table.id,
+                table.asset,
+                where=(((table.from_date <= today)
+                        & (table.through_date >= today))
+                & (table.asset.in_([x.id for x in assets]))
+                )))
+
+        res = dict((r[1], r[0]) for r in cursor.fetchall())
+        return res
+
+    @classmethod
+    def get_current_address(cls, assets, names):
+        pool = Pool()
+        AssetAddress = pool.get('asset.address')
+        assigments = cls.get_current_values(assets, AssetAddress)
+        result = {}
+        for name in names:
+            result[name] = dict((i.id, None) for i in assets)
+
+        for asset, assigment_id in assigments.iteritems():
+            if not assigment_id:
+                continue
+            assigment = AssetAddress(assigment_id)
+            result['current_address'][asset] = assigment.address.id
+            result['current_contact'][asset] = assigment.contact and \
+                assigment.contact.id
+        return result
 
     @staticmethod
     def default_active():

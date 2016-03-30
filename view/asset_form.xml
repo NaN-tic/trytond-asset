@@ -16,6 +16,10 @@
     <field name="type"/>
     <notebook>
         <page id="address" string="Address">
+            <label name="current_address"/>
+            <field name="current_address"/>
+            <label name="current_contact"/>
+            <field name="current_contact"/>
             <field name="address" colspan="4"/>
         </page>
     </notebook>
