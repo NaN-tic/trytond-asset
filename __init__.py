@@ -9,4 +9,5 @@ def register():
     Pool.register(
         Configuration,
         Asset,
+        AssetAddress,
         module='asset', type_='model')

@@ -12,5 +12,11 @@
     <field name="product"/>
     <label name="active"/>
     <field name="active"/>
-    <notebook/>
+    <label name="type"/>
+    <field name="type"/>
+    <notebook>
+        <page id="address" string="Address">
+            <field name="address" colspan="4"/>
+        </page>
+    </notebook>
 </form>

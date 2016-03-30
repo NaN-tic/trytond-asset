@@ -6,7 +6,22 @@ from trytond.pyson import Eval, If
 from trytond.transaction import Transaction
 from trytond import backend
 
-__all__ = ['Asset']
+__all__ = ['Asset', 'AssetAddress']
+
+
+class AssetAssigmentMixin:
+    from_date = fields.Date('From Date', required=True)
+    through_date = fields.Date('Through Date')
+
+
+class AssetAddress(ModelSQL, ModelView, AssetAssigmentMixin):
+    'Asset Address'
+
+    __name__ = 'asset.address'
+
+    address = fields.Many2One('party.address', 'Address')
+    contact = fields.Many2One('party.party', 'Contact')
+    asset = fields.Many2One('asset', 'Asset')
 
 
 class Asset(ModelSQL, ModelView):
@@ -34,6 +49,7 @@ class Asset(ModelSQL, ModelView):
             ('', ''),
             ], 'Type', select=True)
     active = fields.Boolean('Active')
+    address = fields.One2Many('asset.address', 'asset', 'Address')
 
     @classmethod
     def __setup__(cls):
