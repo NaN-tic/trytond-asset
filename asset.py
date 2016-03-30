@@ -5,6 +5,7 @@ from trytond.model import ModelSQL, ModelView, fields, Unique
 from trytond.pyson import Eval, If
 from trytond.transaction import Transaction
 from trytond import backend
+from sql import Null
 from trytond.pyson import Date
 
 
@@ -143,8 +144,9 @@ class Asset(ModelSQL, ModelView):
         cursor.execute(*table.select(
                 table.id,
                 table.asset,
-                where=(((table.from_date <= today)
-                        & (table.through_date >= today))
+                where=((table.from_date <= today)
+                    & ((table.through_date >= today)
+                        | (table.through_date == Null))
                 & (table.asset.in_([x.id for x in assets]))
                 )))
 
