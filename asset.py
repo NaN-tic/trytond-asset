@@ -12,20 +12,20 @@ from trytond.pyson import Date
 __all__ = ['Asset', 'AssetAddress']
 
 
-class AssetAssigmentMixin(ModelSQL, ModelView):
+class AssetAssignmentMixin(ModelSQL, ModelView):
 
     from_date = fields.Date('From Date', required=True)
     through_date = fields.Date('Through Date')
 
     @classmethod
     def validate(cls, assigments):
-        super(AssetAssigmentMixin, cls).validate(assigments)
+        super(AssetAssignmentMixin, cls).validate(assigments)
         for assigment in assigments:
             assigment.check_dates()
 
     @classmethod
     def __setup__(cls):
-        super(AssetAssigmentMixin, cls).__setup__()
+        super(AssetAssignmentMixin, cls).__setup__()
         cls._order.insert(0, ('from_date', 'DESC'))
         cls._error_messages.update({
             'dates_overlaps': ('"%(first)s" and "%(second)s" assigment'
@@ -53,7 +53,7 @@ class AssetAssigmentMixin(ModelSQL, ModelView):
                     })
 
 
-class AssetAddress(AssetAssigmentMixin):
+class AssetAddress(AssetAssignmentMixin):
     'Asset Address'
 
     __name__ = 'asset.address'
