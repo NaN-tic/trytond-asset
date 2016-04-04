@@ -99,7 +99,7 @@ class Asset(ModelSQL, ModelView):
         super(Asset, cls).__setup__()
         t = cls.__table__()
         cls._sql_constraints = [
-            ('code_uniq', Unique(t, t.code),
+            ('code_uniq', Unique(t, t.code, t.company),
                 'The code of the asset must be unique.')
             ]
 
