@@ -4,6 +4,7 @@
 <tree string="Asset">
     <field name="code"/>
     <field name="name"/>
+    <field name="type"/>
     <field name="product"/>
     <field name="active" tree_invisible="1"/>
 </tree>
