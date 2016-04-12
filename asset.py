@@ -1,13 +1,12 @@
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
-from trytond.pool import Pool
+from sql import Null
+
+from trytond import backend
 from trytond.model import ModelSQL, ModelView, fields, Unique
+from trytond.pool import Pool
 from trytond.pyson import Eval, If
 from trytond.transaction import Transaction
-from trytond import backend
-from sql import Null
-from trytond.pyson import Date
-
 
 __all__ = ['Asset', 'AssetAddress']
 
@@ -18,19 +17,19 @@ class AssetAssignmentMixin(ModelSQL, ModelView):
     through_date = fields.Date('Through Date')
 
     @classmethod
-    def validate(cls, assigments):
-        super(AssetAssignmentMixin, cls).validate(assigments)
-        for assigment in assigments:
-            assigment.check_dates()
-
-    @classmethod
     def __setup__(cls):
         super(AssetAssignmentMixin, cls).__setup__()
         cls._order.insert(0, ('from_date', 'DESC'))
         cls._error_messages.update({
-            'dates_overlaps': ('"%(first)s" and "%(second)s" assigment'
-                'overlap.'),
-            })
+                'dates_overlaps': (
+                    '"%(first)s" and "%(second)s" assigment overlap.'),
+                })
+
+    @classmethod
+    def validate(cls, assigments):
+        super(AssetAssignmentMixin, cls).validate(assigments)
+        for assigment in assigments:
+            assigment.check_dates()
 
     def check_dates(self):
         cursor = Transaction().cursor
@@ -55,12 +54,10 @@ class AssetAssignmentMixin(ModelSQL, ModelView):
 
 class AssetAddress(AssetAssignmentMixin):
     'Asset Address'
-
     __name__ = 'asset.address'
-
+    asset = fields.Many2One('asset', 'Asset', required=True)
     address = fields.Many2One('party.address', 'Address', required=True)
     contact = fields.Many2One('party.party', 'Contact')
-    asset = fields.Many2One('asset', 'Asset', required=True)
 
 
 class Asset(ModelSQL, ModelView):
@@ -90,9 +87,11 @@ class Asset(ModelSQL, ModelView):
     active = fields.Boolean('Active')
     address = fields.One2Many('asset.address', 'asset', 'Address')
     current_address = fields.Function(fields.Many2One('party.address',
-        'Current Address'), 'get_current_address')
+            'Current Address'),
+        'get_current_address')
     current_contact = fields.Function(fields.Many2One('party.party',
-        'Current Contact'), 'get_current_address')
+            'Current Contact'),
+        'get_current_address')
 
     @classmethod
     def __setup__(cls):
