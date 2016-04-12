@@ -32,7 +32,7 @@ class AssetAssignmentMixin(ModelSQL, ModelView):
             assigment.check_dates()
 
     def check_dates(self):
-        cursor = Transaction().cursor
+        cursor = Transaction().connection.cursor()
         table = self.__table__()
         cursor.execute(*table.select(table.id,
                 where=(((table.from_date <= self.from_date)
@@ -104,13 +104,15 @@ class Asset(ModelSQL, ModelView):
 
     @classmethod
     def __register__(cls, module_name):
-        TableHandler = backend.get('TableHandler')
         pool = Pool()
         Company = pool.get('company.company')
-        cursor = Transaction().cursor
-        table = TableHandler(cursor, cls, module_name)
+        TableHandler = backend.get('TableHandler')
+
+        cursor = Transaction().connection.cursor()
+        table = TableHandler(cls, module_name)
         sql_table = cls.__table__()
         company_table = Company.__table__()
+
         created_company = not table.column_exist('company')
 
         super(Asset, cls).__register__(module_name)
@@ -137,8 +139,9 @@ class Asset(ModelSQL, ModelView):
     @classmethod
     def get_current_values(cls, assets, Class):
         Date_ = Pool().get('ir.date')
+
         today = Date_.today()
-        cursor = Transaction().cursor
+        cursor = Transaction().connection.cursor()
         table = Class.__table__()
         cursor.execute(*table.select(
                 table.id,
