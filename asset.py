@@ -28,9 +28,9 @@ class AssetAssignmentMixin(ModelSQL, ModelView):
         super(AssetAssignmentMixin, cls).__setup__()
         cls._order.insert(0, ('from_date', 'DESC'))
         cls._error_messages.update({
-            'dates_overlaps': ('"%(first)s" and "%(second)s" assigment'
-                'overlap.'),
-            })
+                'dates_overlaps': (
+                    '"%(first)s" and "%(second)s" assigment overlap.'),
+                })
 
     def check_dates(self):
         cursor = Transaction().cursor

@@ -3,7 +3,7 @@ msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
 msgctxt "error:asset.address:"
-msgid "\"%(first)s\" and \"%(second)s\" assigmentoverlap."
+msgid "\"%(first)s\" and \"%(second)s\" assigment overlap."
 msgstr "\"%(first)s\" y \"%(second)s\"  se solapan."
 
 msgctxt "error:asset:"
