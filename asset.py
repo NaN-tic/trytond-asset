@@ -6,7 +6,7 @@ from sql import Null
 from trytond import backend
 from trytond.model import ModelSQL, ModelView, fields, Unique
 from trytond.pool import Pool
-from trytond.pyson import Eval, If
+from trytond.pyson import Eval, If, Bool
 from trytond.transaction import Transaction
 
 __all__ = ['Asset', 'AssetAddress']
@@ -14,8 +14,16 @@ __all__ = ['Asset', 'AssetAddress']
 
 class AssetAssignmentMixin(ModelSQL, ModelView):
 
-    from_date = fields.Date('From Date', required=True)
-    through_date = fields.Date('Through Date')
+    from_date = fields.Date('From Date', required=True,
+        domain=[If(Bool(Eval('through_date')),
+                ('from_date', '<=', Eval('through_date')),
+                ())],
+        depends=['through_date'])
+    through_date = fields.Date('Through Date',
+        domain=[If(Bool(Eval('through_date')),
+                ('through_date', '>=', Eval('from_date')),
+                ())],
+        depends=['from_date'])
 
     @classmethod
     def __setup__(cls):
@@ -25,6 +33,12 @@ class AssetAssignmentMixin(ModelSQL, ModelView):
                 'dates_overlaps': (
                     '"%(first)s" and "%(second)s" assigment overlap.'),
                 })
+
+    @staticmethod
+    def default_from_date():
+        pool = Pool()
+        Date = pool.get('ir.date')
+        return Date.today()
 
     @classmethod
     def validate(cls, assigments):
