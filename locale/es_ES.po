@@ -2,10 +2,6 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
-msgctxt "error:asset.address:"
-msgid "\"%(first)s\" and \"%(second)s\" assigment overlap."
-msgstr "\"%(first)s\" y \"%(second)s\"  se solapan."
-
 msgctxt "error:asset:"
 msgid "The code of the asset must be unique."
 msgstr "El código del activo debe ser único."
@@ -13,6 +9,10 @@ msgstr "El código del activo debe ser único."
 msgctxt "field:asset,active:"
 msgid "Active"
 msgstr "Activo"
+
+msgctxt "field:asset,address:"
+msgid "Address"
+msgstr "Direcciones"
 
 msgctxt "field:asset,code:"
 msgid "Code"
@@ -154,7 +154,7 @@ msgctxt "model:asset.configuration,name:"
 msgid "Asset Configuration"
 msgstr "Configuración activos"
 
-msgctxt "model:ir.action,name:None"
+msgctxt "model:ir.action,name:"
 msgid "Asset Configuration"
 msgstr "Configuración activos"
 
