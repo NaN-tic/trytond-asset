@@ -37,6 +37,11 @@
             <field name="name">asset_list</field>
         </record>
 
+        <record model="ir.ui.view" id="asset_address_view_form">
+            <field name="model">asset.address</field>
+            <field name="type">form</field>
+            <field name="name">asset_address_form</field>
+        </record>
         <record model="ir.ui.view" id="asset_address_view_list">
             <field name="model">asset.address</field>
             <field name="type">tree</field>
