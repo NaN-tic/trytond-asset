@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!-- The COPYRIGHT file at the top level of this repository contains the full
+     copyright notices and license terms. -->
+<form string="Asset Address">
+    <label name="from_date"/>
+    <field name="from_date"/>
+    <label name="through_date"/>
+    <field name="through_date"/>
+    <label name="address"/>
+    <field name="address"/>
+    <label name="contact"/>
+    <field name="contact"/>
+</form>
+
+
