@@ -13,8 +13,7 @@ __all__ = ['Asset', 'AssetAddress']
 
 
 class AssetAssignmentMixin(ModelSQL, ModelView):
-
-    from_date = fields.Date('From Date', required=True)
+    from_date = fields.Date('From Date')
     through_date = fields.Date('Through Date')
 
     @classmethod
