@@ -13,7 +13,6 @@ __all__ = ['Asset', 'AssetAddress']
 
 
 class AssetAssignmentMixin(ModelSQL, ModelView):
-
     from_date = fields.Date('From Date', required=True,
         domain=[If(Bool(Eval('through_date')),
                 ('from_date', '<=', Eval('through_date')),
@@ -30,8 +29,7 @@ class AssetAssignmentMixin(ModelSQL, ModelView):
         super(AssetAssignmentMixin, cls).__setup__()
         cls._order.insert(0, ('from_date', 'DESC'))
         cls._error_messages.update({
-                'dates_overlaps': (
-                    '"%(first)s" and "%(second)s" assigment overlap.'),
+                'dates_overlaps': ('"%(first)s" and "%(second)s" overlap.'),
                 })
 
     @staticmethod
