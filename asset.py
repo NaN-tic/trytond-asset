@@ -55,7 +55,7 @@ class AssetAssignmentMixin(ModelSQL, ModelView):
 class AssetAddress(AssetAssignmentMixin):
     'Asset Address'
     __name__ = 'asset.address'
-    asset = fields.Many2One('asset', 'Asset', required=True)
+    asset = fields.Many2One('asset', 'Asset', required=True, ondelete='CASCADE')
     address = fields.Many2One('party.address', 'Address', required=True)
     contact = fields.Many2One('party.party', 'Contact')
 
