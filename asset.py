@@ -133,7 +133,7 @@ class Asset(ModelSQL, ModelView):
 
         super(Asset, cls).__register__(module_name)
 
-        table = TableHandler(cursor, cls, module_name)
+        table = TableHandler(cls, module_name)
         # Migration: new company field
         if created_company:
             # Don't use UPDATE FROM because SQLite nor MySQL support it.
