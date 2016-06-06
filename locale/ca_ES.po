@@ -2,6 +2,10 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "error:asset.address:"
+msgid "\"%(first)s\" and \"%(second)s\" overlap."
+msgstr "\"%(first)s\" i \"%(second)s\" es solapen."
+
 msgctxt "error:asset:"
 msgid "The code of the asset must be unique."
 msgstr "El codi de l'actiu ha de ser únic."
@@ -88,7 +92,7 @@ msgstr "Data creació"
 
 msgctxt "field:asset.address,create_uid:"
 msgid "Create User"
-msgstr "Usuari de creació"
+msgstr "Usuari creació"
 
 msgctxt "field:asset.address,from_date:"
 msgid "From Date"
@@ -96,7 +100,7 @@ msgstr "Data inicial"
 
 msgctxt "field:asset.address,id:"
 msgid "ID"
-msgstr "Identificador"
+msgstr "ID"
 
 msgctxt "field:asset.address,rec_name:"
 msgid "Name"
