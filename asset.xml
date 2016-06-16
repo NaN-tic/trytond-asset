@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
+<!-- The COPYRIGHT file at the top level of this repository contains the full
+     copyright notices and license terms. -->
 <tryton>
     <data>
-
         <record model="res.group" id="group_asset">
             <field name="name">Asset</field>
         </record>
@@ -79,7 +80,6 @@
             <field name="perm_delete" eval="True"/>
         </record>
 
-
         <!-- Menus -->
         <menuitem id="menu_asset" name="Asset" sequence="1"
             icon="tryton-system-file-manager"/>
@@ -110,7 +110,6 @@
                 pyson="1"/>
             <field name="rule_group" ref="rule_group_asset"/>
         </record>
-
 
         <record model="ir.sequence.type" id="sequence_type_asset">
             <field name="name">Asset</field>
