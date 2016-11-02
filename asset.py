@@ -102,10 +102,12 @@ class Asset(ModelSQL, ModelView):
     address = fields.One2Many('asset.address', 'asset', 'Address')
     current_address = fields.Function(fields.Many2One('party.address',
             'Current Address'),
-        'get_current_address')
+        'get_current_address',
+        searcher='search_current_address')
     current_contact = fields.Function(fields.Many2One('party.party',
             'Current Contact'),
-        'get_current_address')
+        'get_current_address',
+        searcher='search_current_contact')
 
     @classmethod
     def __setup__(cls):
@@ -202,6 +204,14 @@ class Asset(ModelSQL, ModelView):
             result['current_contact'][asset] = assigment.contact and \
                 assigment.contact.id
         return result
+
+    @classmethod
+    def search_current_address(cls, name, clause):
+        return[('address.address',) + tuple(clause[1:])]
+
+    @classmethod
+    def search_current_contact(cls, name, clause):
+        return[('address.contact',) + tuple(clause[1:])]
 
     @staticmethod
     def default_active():
