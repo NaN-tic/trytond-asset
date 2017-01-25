@@ -15,12 +15,12 @@
     <label name="type"/>
     <field name="type"/>
     <notebook>
-        <page id="address" string="Address">
+        <page id="addresses" string="Addresses">
             <label name="current_address"/>
             <field name="current_address"/>
             <label name="current_contact"/>
             <field name="current_contact"/>
-            <field name="address" colspan="4"/>
+            <field name="addresses" colspan="4"/>
         </page>
     </notebook>
 </form>

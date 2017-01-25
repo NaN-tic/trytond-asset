@@ -90,14 +90,12 @@ class Asset(ModelSQL, ModelView):
             ('', ''),
             ], 'Type', select=True)
     active = fields.Boolean('Active')
-    address = fields.One2Many('asset.address', 'asset', 'Address')
+    addresses = fields.One2Many('asset.address', 'asset', 'Addresses')
     current_address = fields.Function(fields.Many2One('party.address',
-            'Current Address'),
-        'get_current_address',
+            'Current Address'), 'get_current_address',
         searcher='search_current_address')
     current_contact = fields.Function(fields.Many2One('party.party',
-            'Current Contact'),
-        'get_current_address',
+            'Current Contact'), 'get_current_address',
         searcher='search_current_contact')
 
     @classmethod
@@ -201,11 +199,15 @@ class Asset(ModelSQL, ModelView):
 
     @classmethod
     def search_current_address(cls, name, clause):
-        return[('address.address',) + tuple(clause[1:])]
+        if not clause[2]:
+            return [('addresses',) + tuple(clause[1:])]
+        return [('addresses.address',) + tuple(clause[1:])]
 
     @classmethod
     def search_current_contact(cls, name, clause):
-        return[('address.contact',) + tuple(clause[1:])]
+        if not clause[2]:
+            return [('addresses',) + tuple(clause[1:])]
+        return [('addresses.contact',) + tuple(clause[1:])]
 
     @staticmethod
     def default_active():
