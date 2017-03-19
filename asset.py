@@ -39,10 +39,10 @@ class AssetAssignmentMixin(ModelSQL, ModelView):
         return Date.today()
 
     @classmethod
-    def validate(cls, assigments):
-        super(AssetAssignmentMixin, cls).validate(assigments)
-        for assigment in assigments:
-            assigment.check_dates()
+    def validate(cls, assignments):
+        super(AssetAssignmentMixin, cls).validate(assignments)
+        for assignment in assignments:
+            assignment.check_dates()
 
     def check_dates(self):
         cursor = Transaction().connection.cursor()
@@ -56,9 +56,9 @@ class AssetAssignmentMixin(ModelSQL, ModelView):
                         & (table.through_date <= self.through_date)))
                 & (table.asset == self.asset.id)
                 & (table.id != self.id)))
-        assigment = cursor.fetchone()
-        if assigment:
-            overlapping_period = self.__class__(assigment[0])
+        assignment = cursor.fetchone()
+        if assignment:
+            overlapping_period = self.__class__(assignment[0])
             self.raise_user_error('dates_overlaps', {
                     'first': self.rec_name,
                     'second': overlapping_period.rec_name,
@@ -183,13 +183,13 @@ class Asset(ModelSQL, ModelView):
     def get_current_address(cls, assets, names):
         pool = Pool()
         AssetAddress = pool.get('asset.address')
-        assigments = cls.get_current_values(assets, AssetAddress)
+        assignments = cls.get_current_values(assets, AssetAddress)
         result = {}
         for name in names:
             result[name] = dict((i.id, None) for i in assets)
 
-        for asset, assigment_id in assigments.iteritems():
-            if not assigment_id:
+        for asset, assignment_id in assignments.iteritems():
+            if not assignment_id:
                 continue
             assignment = AssetAddress(assignment_id)
             if 'current_address' in result:
