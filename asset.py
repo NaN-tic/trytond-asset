@@ -170,7 +170,7 @@ class Asset(ModelSQL, ModelView):
         cursor.execute(*table.select(
                 table.id,
                 table.asset,
-                where=((table.from_date <= today)
+                where=(((table.from_date <= today) | (table.from_date == Null))
                     & ((table.through_date >= today)
                         | (table.through_date == Null))
                 & (table.asset.in_([x.id for x in assets]))
