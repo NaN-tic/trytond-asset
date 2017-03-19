@@ -191,10 +191,13 @@ class Asset(ModelSQL, ModelView):
         for asset, assigment_id in assigments.iteritems():
             if not assigment_id:
                 continue
-            assigment = AssetAddress(assigment_id)
-            result['current_address'][asset] = assigment.address.id
-            result['current_contact'][asset] = assigment.contact and \
-                assigment.contact.id
+            assignment = AssetAddress(assignment_id)
+            if 'current_address' in result:
+                result['current_address'][asset] = (assignment.address.id if
+                    assignment.address else None)
+            if 'current_contact' in result:
+                result['current_contact'][asset] = (assignment.contact.id if
+                    assignment.contact else None)
         return result
 
     @classmethod
