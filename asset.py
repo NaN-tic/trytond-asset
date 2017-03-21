@@ -110,34 +110,15 @@ class Asset(ModelSQL, ModelView):
     @classmethod
     def __register__(cls, module_name):
         pool = Pool()
-        AssetAddress = pool.get('asset.address')
         Company = pool.get('company.company')
         TableHandler = backend.get('TableHandler')
 
         cursor = Transaction().connection.cursor()
         table = TableHandler(cls, module_name)
         sql_table = cls.__table__()
-        asset_address_table = AssetAddress.__table__()
         company_table = Company.__table__()
 
         created_company = not table.column_exist('company')
-        address_exist = table.column_exist('address')
-
-
-        table = TableHandler(cls, module_name)
-
-        # Migration: address Many2One replaced by One2Many
-        if address_exist:
-            assert address_exist
-            cursor.execute(*sql_table.select(sql_table.id, sql_table.address,
-                    where=sql_table.address != Null))
-            for asset_id, address_id in cursor.fetchall():
-                cursor.execute(*asset_address_table.insert([
-                        asset_address_table.asset,
-                        asset_address_table.address,
-                        asset_address_table.from_date],
-                    [[asset_id, address_id, date.min]]))
-            table.drop_column('address')
 
         super(Asset, cls).__register__(module_name)
         # Migration: new company field
@@ -145,7 +126,6 @@ class Asset(ModelSQL, ModelView):
             # Don't use UPDATE FROM because SQLite nor MySQL support it.
             value = company_table.select(company_table.id, limit=1)
             cursor.execute(*sql_table.update([sql_table.company], [value]))
-
 
     def get_rec_name(self, name):
         name = '[%s]' % self.code
@@ -260,3 +240,31 @@ class AssetAddress(AssetAssignmentMixin):
         ondelete='CASCADE')
     address = fields.Many2One('party.address', 'Address', required=True)
     contact = fields.Many2One('party.party', 'Contact')
+
+    @classmethod
+    def __register__(cls, module_name):
+        super(AssetAddress, cls).__register__(module_name)
+        pool = Pool()
+
+        Asset = pool.get('asset')
+        cursor = Transaction().connection.cursor()
+        sql_table = cls.__table__()
+        asset_table = Asset.__table__()
+
+        TableHandler = backend.get('TableHandler')
+
+        table = TableHandler(Asset, module_name)
+        address_exist = table.column_exist('address')
+
+        # Migration: address Many2One replaced by One2Many
+        if address_exist:
+            cursor.execute(*asset_table.select(asset_table.id,
+                asset_table.address,
+                where=asset_table.address != Null))
+            for asset_id, address_id in cursor.fetchall():
+                cursor.execute(*sql_table.insert([
+                        sql_table.asset,
+                        sql_table.address,
+                        sql_table.from_date],
+                    [[asset_id, address_id, date.min]]))
+            table.drop_column('address')
