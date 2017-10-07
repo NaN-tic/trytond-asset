@@ -14,8 +14,8 @@ msgctxt "field:asset,active:"
 msgid "Active"
 msgstr "Activo"
 
-msgctxt "field:asset,address:"
-msgid "Address"
+msgctxt "field:asset,addresses:"
+msgid "Addresses"
 msgstr "Direcciones"
 
 msgctxt "field:asset,code:"
@@ -32,11 +32,11 @@ msgstr "Empresa"
 
 msgctxt "field:asset,create_date:"
 msgid "Create Date"
-msgstr "Fecha creación"
+msgstr "Fecha de creación"
 
 msgctxt "field:asset,create_uid:"
 msgid "Create User"
-msgstr "Usuario creación"
+msgstr "Usuario de creación"
 
 msgctxt "field:asset,current_address:"
 msgid "Current Address"
@@ -68,11 +68,11 @@ msgstr "Tipo"
 
 msgctxt "field:asset,write_date:"
 msgid "Write Date"
-msgstr "Fecha modificación"
+msgstr "Fecha de modificación"
 
 msgctxt "field:asset,write_uid:"
 msgid "Write User"
-msgstr "Usuario modificación"
+msgstr "Usuario de modificación"
 
 msgctxt "field:asset.address,address:"
 msgid "Address"
@@ -88,11 +88,11 @@ msgstr "Contacto"
 
 msgctxt "field:asset.address,create_date:"
 msgid "Create Date"
-msgstr "Fecha creación"
+msgstr "Fecha de creación"
 
 msgctxt "field:asset.address,create_uid:"
 msgid "Create User"
-msgstr "Usuario creación"
+msgstr "Usuario de creación"
 
 msgctxt "field:asset.address,from_date:"
 msgid "From Date"
@@ -112,11 +112,11 @@ msgstr "Hasta Fecha"
 
 msgctxt "field:asset.address,write_date:"
 msgid "Write Date"
-msgstr "Fecha modificación"
+msgstr "Fecha de modificación"
 
 msgctxt "field:asset.address,write_uid:"
 msgid "Write User"
-msgstr "Usuario modificación"
+msgstr "Usuario de modificación"
 
 msgctxt "field:asset.configuration,asset_sequence:"
 msgid "Asset Sequence"
@@ -124,11 +124,11 @@ msgstr "Sequencia activos"
 
 msgctxt "field:asset.configuration,create_date:"
 msgid "Create Date"
-msgstr "Fecha creación"
+msgstr "Fecha de creación"
 
 msgctxt "field:asset.configuration,create_uid:"
 msgid "Create User"
-msgstr "Usuario creación"
+msgstr "Usuario de creación"
 
 msgctxt "field:asset.configuration,id:"
 msgid "ID"
@@ -140,11 +140,11 @@ msgstr "Nombre"
 
 msgctxt "field:asset.configuration,write_date:"
 msgid "Write Date"
-msgstr "Fecha modificación"
+msgstr "Fecha de modificación"
 
 msgctxt "field:asset.configuration,write_uid:"
 msgid "Write User"
-msgstr "Usuario modificación"
+msgstr "Usuario de modificación"
 
 msgctxt "model:asset,name:"
 msgid "Asset"
@@ -215,9 +215,5 @@ msgid "Asset Configuration"
 msgstr "Configuración activos"
 
 msgctxt "view:asset:"
-msgid "Address"
+msgid "Addresses"
 msgstr "Direcciones"
-
-msgctxt "view:asset:"
-msgid "Asset"
-msgstr "Activo"
