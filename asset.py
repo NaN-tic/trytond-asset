@@ -39,10 +39,10 @@ class AssetAssignmentMixin(ModelSQL, ModelView):
         return Date.today()
 
     @classmethod
-    def validate(cls, assigments):
-        super(AssetAssignmentMixin, cls).validate(assigments)
-        for assigment in assigments:
-            assigment.check_dates()
+    def validate(cls, assignments):
+        super(AssetAssignmentMixin, cls).validate(assignments)
+        for assignment in assignments:
+            assignment.check_dates()
 
     def check_dates(self):
         cursor = Transaction().connection.cursor()
@@ -56,21 +56,13 @@ class AssetAssignmentMixin(ModelSQL, ModelView):
                         & (table.through_date <= self.through_date)))
                 & (table.asset == self.asset.id)
                 & (table.id != self.id)))
-        assigment = cursor.fetchone()
-        if assigment:
-            overlapping_period = self.__class__(assigment[0])
+        assignment = cursor.fetchone()
+        if assignment:
+            overlapping_period = self.__class__(assignment[0])
             self.raise_user_error('dates_overlaps', {
                     'first': self.rec_name,
                     'second': overlapping_period.rec_name,
                     })
-
-
-class AssetAddress(AssetAssignmentMixin):
-    'Asset Address'
-    __name__ = 'asset.address'
-    asset = fields.Many2One('asset', 'Asset', required=True, ondelete='CASCADE')
-    address = fields.Many2One('party.address', 'Address', required=True)
-    contact = fields.Many2One('party.party', 'Contact')
 
 
 class Asset(ModelSQL, ModelView):
@@ -98,13 +90,13 @@ class Asset(ModelSQL, ModelView):
             ('', ''),
             ], 'Type', select=True)
     active = fields.Boolean('Active')
-    address = fields.One2Many('asset.address', 'asset', 'Address')
+    addresses = fields.One2Many('asset.address', 'asset', 'Addresses')
     current_address = fields.Function(fields.Many2One('party.address',
-            'Current Address'),
-        'get_current_address')
+            'Current Address'), 'get_current_address',
+        searcher='search_current_address')
     current_contact = fields.Function(fields.Many2One('party.party',
-            'Current Contact'),
-        'get_current_address')
+            'Current Contact'), 'get_current_address',
+        searcher='search_current_contact')
 
     @classmethod
     def __setup__(cls):
@@ -118,39 +110,22 @@ class Asset(ModelSQL, ModelView):
     @classmethod
     def __register__(cls, module_name):
         pool = Pool()
-        AssetAddress = pool.get('asset.address')
         Company = pool.get('company.company')
         TableHandler = backend.get('TableHandler')
 
         cursor = Transaction().connection.cursor()
         table = TableHandler(cls, module_name)
         sql_table = cls.__table__()
-        asset_address_table = AssetAddress.__table__()
         company_table = Company.__table__()
 
         created_company = not table.column_exist('company')
-        address_exist = table.column_exist('address')
 
         super(Asset, cls).__register__(module_name)
-
-        table = TableHandler(cls, module_name)
         # Migration: new company field
         if created_company:
             # Don't use UPDATE FROM because SQLite nor MySQL support it.
             value = company_table.select(company_table.id, limit=1)
             cursor.execute(*sql_table.update([sql_table.company], [value]))
-
-        # Migration: address Many2One replaced by One2Many
-        if address_exist:
-            cursor.execute(*sql_table.select(sql_table.id, sql_table.address,
-                    where=sql_table.address != Null))
-            for asset_id, address_id in cursor.fetchall():
-                asset_address_table.insert([
-                        asset_address_table.asset,
-                        asset_address_table.address,
-                        asset_address_table.from_date],
-                    [[asset_id, address_id, date.min]])
-            table.drop_column('address')
 
     def get_rec_name(self, name):
         name = '[%s]' % self.code
@@ -175,7 +150,7 @@ class Asset(ModelSQL, ModelView):
         cursor.execute(*table.select(
                 table.id,
                 table.asset,
-                where=((table.from_date <= today)
+                where=(((table.from_date <= today) | (table.from_date == Null))
                     & ((table.through_date >= today)
                         | (table.through_date == Null))
                 & (table.asset.in_([x.id for x in assets]))
@@ -188,19 +163,34 @@ class Asset(ModelSQL, ModelView):
     def get_current_address(cls, assets, names):
         pool = Pool()
         AssetAddress = pool.get('asset.address')
-        assigments = cls.get_current_values(assets, AssetAddress)
+        assignments = cls.get_current_values(assets, AssetAddress)
         result = {}
         for name in names:
             result[name] = dict((i.id, None) for i in assets)
 
-        for asset, assigment_id in assigments.iteritems():
-            if not assigment_id:
+        for asset, assignment_id in assignments.iteritems():
+            if not assignment_id:
                 continue
-            assigment = AssetAddress(assigment_id)
-            result['current_address'][asset] = assigment.address.id
-            result['current_contact'][asset] = assigment.contact and \
-                assigment.contact.id
+            assignment = AssetAddress(assignment_id)
+            if 'current_address' in result:
+                result['current_address'][asset] = (assignment.address.id if
+                    assignment.address else None)
+            if 'current_contact' in result:
+                result['current_contact'][asset] = (assignment.contact.id if
+                    assignment.contact else None)
         return result
+
+    @classmethod
+    def search_current_address(cls, name, clause):
+        if not clause[2]:
+            return [('addresses',) + tuple(clause[1:])]
+        return [('addresses.address',) + tuple(clause[1:])]
+
+    @classmethod
+    def search_current_contact(cls, name, clause):
+        if not clause[2]:
+            return [('addresses',) + tuple(clause[1:])]
+        return [('addresses.contact',) + tuple(clause[1:])]
 
     @staticmethod
     def default_active():
@@ -241,3 +231,40 @@ class Asset(ModelSQL, ModelView):
             default = {}
         default.setdefault('code', None)
         return super(Asset, cls).copy(assets, default=default)
+
+
+class AssetAddress(AssetAssignmentMixin):
+    'Asset Address'
+    __name__ = 'asset.address'
+    asset = fields.Many2One('asset', 'Asset', required=True,
+        ondelete='CASCADE')
+    address = fields.Many2One('party.address', 'Address', required=True)
+    contact = fields.Many2One('party.party', 'Contact')
+
+    @classmethod
+    def __register__(cls, module_name):
+        super(AssetAddress, cls).__register__(module_name)
+        pool = Pool()
+
+        Asset = pool.get('asset')
+        cursor = Transaction().connection.cursor()
+        sql_table = cls.__table__()
+        asset_table = Asset.__table__()
+
+        TableHandler = backend.get('TableHandler')
+
+        table = TableHandler(Asset, module_name)
+        address_exist = table.column_exist('address')
+
+        # Migration: address Many2One replaced by One2Many
+        if address_exist:
+            cursor.execute(*asset_table.select(asset_table.id,
+                asset_table.address,
+                where=asset_table.address != Null))
+            for asset_id, address_id in cursor.fetchall():
+                cursor.execute(*sql_table.insert([
+                        sql_table.asset,
+                        sql_table.address,
+                        sql_table.from_date],
+                    [[asset_id, address_id, date.min]]))
+            table.drop_column('address')

@@ -1,10 +1,12 @@
 <?xml version="1.0"?>
 <!-- The COPYRIGHT file at the top level of this repository contains the full
      copyright notices and license terms. -->
-<tree>
+<tree string="Asset">
     <field name="code"/>
     <field name="name"/>
     <field name="type"/>
     <field name="product"/>
+    <field name="current_address"/>
+    <field name="current_contact"/>
     <field name="active" tree_invisible="1"/>
 </tree>
