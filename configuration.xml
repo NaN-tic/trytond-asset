@@ -22,10 +22,5 @@
             action="act_asset_configuration_form"
             id="menu_asset_configuration"
             sequence="0" icon="tryton-list"/>
-        <record model="ir.property" id="property_asset_sequence">
-            <field name="field"
-                search="[('model.model', '=', 'asset.configuration'), ('name', '=', 'asset_sequence')]"/>
-            <field name="value" eval="'ir.sequence,' + str(ref('sequence_asset'))"/>
-        </record>
     </data>
 </tryton>
