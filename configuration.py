@@ -8,7 +8,7 @@ from trytond.tools.multivalue import migrate_property
 from trytond.modules.company.model import (
     CompanyMultiValueMixin, CompanyValueMixin)
 
-__all__ = ['Configuration']
+__all__ = ['Configuration', 'ConfigurationSequence']
 
 
 class Configuration(
@@ -22,6 +22,17 @@ class Configuration(
                     [Eval('context', {}).get('company', -1), None]),
                 ('code', '=', 'asset'),
                 ]))
+
+    @classmethod
+    def multivalue_model(cls, field):
+        pool = Pool()
+        if field == 'asset_sequence':
+            return pool.get('asset.configuration.sequence')
+        return super(Configuration, cls).multivalue_model(field)
+
+    @classmethod
+    def default_asset_sequence(cls):
+        return cls.multivalue_model('asset_sequence').default_asset_sequence()
 
 
 class ConfigurationSequence(ModelSQL, CompanyValueMixin):
@@ -55,7 +66,7 @@ class ConfigurationSequence(ModelSQL, CompanyValueMixin):
             fields=fields)
 
     @classmethod
-    def default_sale_sequence(cls):
+    def default_asset_sequence(cls):
         pool = Pool()
         ModelData = pool.get('ir.model.data')
         try:

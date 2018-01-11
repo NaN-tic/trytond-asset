@@ -8,6 +8,7 @@ from . import asset
 def register():
     Pool.register(
         configuration.Configuration,
+        configuration.ConfigurationSequence,
         asset.Asset,
         asset.AssetAddress,
         module='asset', type_='model')
