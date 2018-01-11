@@ -31,7 +31,7 @@ class Configuration(
         return super(Configuration, cls).multivalue_model(field)
 
     @classmethod
-    def default_asset_sequence(cls):
+    def default_asset_sequence(cls, **pattern):
         return cls.multivalue_model('asset_sequence').default_asset_sequence()
 
 
