@@ -168,7 +168,7 @@ class Asset(ModelSQL, ModelView):
         for name in names:
             result[name] = dict((i.id, None) for i in assets)
 
-        for asset, assignment_id in assignments.iteritems():
+        for asset, assignment_id in assignments.items():
             if not assignment_id:
                 continue
             assignment = AssetAddress(assignment_id)
