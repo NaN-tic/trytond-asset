@@ -93,7 +93,7 @@
             parent="menu_asset" sequence="10" name="Assets"/>
 
         <menuitem id="menu_configuration" parent="menu_asset"
-            name="Configuration" icon="tryton-preferences" sequence="0"/>
+            name="Configuration" icon="tryton-settings" sequence="0"/>
 
         <record model="ir.ui.menu-res.group"
                 id="menu_configuration_group_asset_admin">
