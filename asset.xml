@@ -82,7 +82,7 @@
 
         <!-- Menus -->
         <menuitem id="menu_asset" name="Asset" sequence="1"
-            icon="tryton-system-file-manager"/>
+            icon="tryton-archive"/>
 
         <record model="ir.ui.menu-res.group" id="menu_asset_group_asset">
             <field name="menu" ref="menu_asset"/>
