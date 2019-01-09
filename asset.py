@@ -28,9 +28,6 @@ class AssetAssignmentMixin(ModelSQL, ModelView):
     def __setup__(cls):
         super(AssetAssignmentMixin, cls).__setup__()
         cls._order.insert(0, ('from_date', 'DESC'))
-        cls._error_messages.update({
-                'dates_overlaps': ('"%(first)s" and "%(second)s" overlap.'),
-                })
 
     @staticmethod
     def default_from_date():
@@ -59,10 +56,9 @@ class AssetAssignmentMixin(ModelSQL, ModelView):
         assignment = cursor.fetchone()
         if assignment:
             overlapping_period = self.__class__(assignment[0])
-            self.raise_user_error('dates_overlaps', {
-                    'first': self.rec_name,
-                    'second': overlapping_period.rec_name,
-                    })
+            raise UserError(gettext('asset.dates_overlaps',
+                    first=self.rec_name,
+                    second=overlapping_period.rec_name))
 
 
 class Asset(ModelSQL, ModelView):
