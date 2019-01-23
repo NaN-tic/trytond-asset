@@ -3,6 +3,7 @@
 from trytond.pool import Pool
 from . import configuration
 from . import asset
+from . import party
 
 
 def register():
@@ -12,3 +13,6 @@ def register():
         asset.Asset,
         asset.AssetAddress,
         module='asset', type_='model')
+    Pool.register(
+        party.PartyReplace,
+        module='asset', type_='wizard')
