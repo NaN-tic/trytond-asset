@@ -2,7 +2,7 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
-msgctxt "error:asset.address:"
+msgctxt "model:ir.message,text:dates_overlaps"
 msgid "\"%(first)s\" and \"%(second)s\" overlap."
 msgstr "\"%(first)s\" i \"%(second)s\" es solapen."
 
