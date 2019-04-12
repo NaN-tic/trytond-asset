@@ -101,6 +101,7 @@
             <field name="group" ref="group_asset_admin"/>
         </record>
         <record model="ir.rule.group" id="rule_group_asset">
+            <field name="name"> Asset Rule Group Company </field>
             <field name="model" search="[('model', '=', 'asset')]"/>
             <field name="global_p" eval="True"/>
         </record>
