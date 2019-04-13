@@ -10,10 +10,6 @@
             <field name="user" ref="res.user_admin"/>
             <field name="group" ref="group_asset"/>
         </record>
-        <record model="res.user-res.group" id="user_trigger_group_asset">
-            <field name="user" ref="res.user_trigger"/>
-            <field name="group" ref="group_asset"/>
-        </record>
 
         <record model="res.group" id="group_asset_admin">
             <field name="name">Asset Administration</field>
@@ -22,12 +18,8 @@
             <field name="user" ref="res.user_admin"/>
             <field name="group" ref="group_asset_admin"/>
         </record>
-        <record model="res.user-res.group" id="user_trigger_group_asset_admin">
-            <field name="user" ref="res.user_trigger"/>
-            <field name="group" ref="group_asset_admin"/>
-        </record>
 
-        <record model="ir.ui.view" id="asset_view_form">
+       <record model="ir.ui.view" id="asset_view_form">
             <field name="model">asset</field>
             <field name="type">form</field>
             <field name="name">asset_form</field>
