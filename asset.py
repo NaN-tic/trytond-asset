@@ -107,10 +107,9 @@ class Asset(ModelSQL, ModelView):
     def __register__(cls, module_name):
         pool = Pool()
         Company = pool.get('company.company')
-        TableHandler = backend.get('TableHandler')
 
         cursor = Transaction().connection.cursor()
-        table = TableHandler(cls, module_name)
+        table = backend.TableHandler(cls, module_name)
         sql_table = cls.__table__()
         company_table = Company.__table__()
 
@@ -247,9 +246,7 @@ class AssetAddress(AssetAssignmentMixin):
         sql_table = cls.__table__()
         asset_table = Asset.__table__()
 
-        TableHandler = backend.get('TableHandler')
-
-        table = TableHandler(Asset, module_name)
+        table = backend.TableHandler(Asset, module_name)
         address_exist = table.column_exist('address')
 
         # Migration: address Many2One replaced by One2Many
