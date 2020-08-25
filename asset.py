@@ -226,6 +226,8 @@ class Asset(ModelSQL, ModelView):
     def copy(cls, assets, default=None):
         if default is None:
             default = {}
+        else:
+            default = default.copy()
         default.setdefault('code', None)
         return super(Asset, cls).copy(assets, default=default)
 
