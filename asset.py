@@ -212,14 +212,13 @@ class Asset(ModelSQL, ModelView):
 
     @classmethod
     def create(cls, vlist):
-        Sequence = Pool().get('ir.sequence')
         Configuration = Pool().get('asset.configuration')
 
         vlist = [x.copy() for x in vlist]
         for values in vlist:
             if not values.get('code'):
                 config = Configuration(1)
-                values['code'] = Sequence.get_id(config.asset_sequence.id)
+                values['code'] = config.asset_sequence.get()
         return super(Asset, cls).create(vlist)
 
     @classmethod
