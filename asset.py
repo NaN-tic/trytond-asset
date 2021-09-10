@@ -4,7 +4,7 @@ from datetime import date
 from sql import Null
 
 from trytond import backend
-from trytond.model import ModelSQL, ModelView, fields, Unique
+from trytond.model import ModelSQL, ModelView, DeactivableMixin, fields, Unique
 from trytond.pool import Pool
 from trytond.pyson import Eval, If, Bool
 from trytond.transaction import Transaction
@@ -63,7 +63,7 @@ class AssetAssignmentMixin(ModelSQL, ModelView):
                     second=overlapping_period.rec_name))
 
 
-class Asset(ModelSQL, ModelView):
+class Asset(DeactivableMixin, ModelSQL, ModelView):
     'Asset'
     __name__ = 'asset'
     company = fields.Many2One('company.company', 'Company', required=True,
@@ -87,7 +87,6 @@ class Asset(ModelSQL, ModelView):
     type = fields.Selection([
             ('', ''),
             ], 'Type', select=True)
-    active = fields.Boolean('Active')
     addresses = fields.One2Many('asset.address', 'asset', 'Addresses')
     current_address = fields.Function(fields.Many2One('party.address',
             'Current Address'), 'get_current_address',
@@ -123,6 +122,20 @@ class Asset(ModelSQL, ModelView):
             # Don't use UPDATE FROM because SQLite nor MySQL support it.
             value = company_table.select(company_table.id, limit=1)
             cursor.execute(*sql_table.update([sql_table.company], [value]))
+
+    @staticmethod
+    def default_code_readonly():
+        Configuration = Pool().get('asset.configuration')
+        config = Configuration(1)
+        return bool(config.asset_sequence)
+
+    @staticmethod
+    def default_type():
+        return Transaction().context.get('type', '')
+
+    @staticmethod
+    def default_company():
+        return Transaction().context.get('company')
 
     def get_rec_name(self, name):
         name = '[%s]' % self.code
@@ -188,24 +201,6 @@ class Asset(ModelSQL, ModelView):
         if not clause[2]:
             return [('addresses',) + tuple(clause[1:])]
         return [('addresses.contact',) + tuple(clause[1:])]
-
-    @staticmethod
-    def default_active():
-        return True
-
-    @staticmethod
-    def default_code_readonly():
-        Configuration = Pool().get('asset.configuration')
-        config = Configuration(1)
-        return bool(config.asset_sequence)
-
-    @staticmethod
-    def default_type():
-        return Transaction().context.get('type', '')
-
-    @staticmethod
-    def default_company():
-        return Transaction().context.get('company')
 
     def get_code_readonly(self, name):
         return True
