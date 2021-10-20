@@ -42,7 +42,7 @@ class ConfigurationSequence(ModelSQL, CompanyValueMixin):
         'ir.sequence', "Asset Sequence",
         domain=[
             ('company', 'in', [Eval('company', -1), None]),
-            ('code', '=', 'asset'),
+            ('sequence_type', '=', Id('asset', 'sequence_type_asset')),
             ],
         depends=['company'])
 
