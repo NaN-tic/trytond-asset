@@ -5,9 +5,10 @@ import doctest
 import trytond.tests.test_tryton
 from trytond.tests.test_tryton import ModuleTestCase
 from trytond.tests.test_tryton import doctest_teardown, doctest_checker
+from trytond.modules.company.tests import CompanyTestMixin
 
 
-class AssetTestCase(ModuleTestCase):
+class AssetTestCase(CompanyTestMixin, ModuleTestCase):
     'Asset Test module'
     module = 'asset'
 
