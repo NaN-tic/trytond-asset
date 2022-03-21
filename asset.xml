@@ -73,7 +73,7 @@
         </record>
 
         <!-- Menus -->
-        <menuitem id="menu_asset" name="Asset" sequence="20" 
+        <menuitem id="menu_asset" name="Asset" sequence="20"
             icon="tryton-archive"/>
 
         <record model="ir.ui.menu-res.group" id="menu_asset_group_asset">
@@ -99,7 +99,7 @@
         </record>
         <record model="ir.rule" id="rule_asset1">
             <field name="domain"
-                eval="[('company', '=', Eval('user', {}).get('company', None))]"
+                eval="[('company', 'in', Eval('companies', []))]"
                 pyson="1"/>
             <field name="rule_group" ref="rule_group_asset"/>
         </record>

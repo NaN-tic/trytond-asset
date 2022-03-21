@@ -83,7 +83,11 @@ class Asset(DeactivableMixin, ModelSQL, ModelView):
     product = fields.Many2One('product.product', 'Product',
         domain=[
             ('type', 'in', ['assets', 'goods']),
-            ])
+            ],
+        context={
+            'company': Eval('company'),
+            },
+        depends=['company'])
     type = fields.Selection([
             ('', ''),
             ], 'Type', select=True)
@@ -92,7 +96,11 @@ class Asset(DeactivableMixin, ModelSQL, ModelView):
             'Current Address'), 'get_current_address',
         searcher='search_current_address')
     current_contact = fields.Function(fields.Many2One('party.party',
-            'Current Contact'), 'get_current_address',
+            "Current Contact",
+        context={
+            'company': Eval('company'),
+            },
+        depends=['company']), 'get_current_address',
         searcher='search_current_contact')
 
     @classmethod
