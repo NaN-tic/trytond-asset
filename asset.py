@@ -118,7 +118,7 @@ class Asset(DeactivableMixin, ModelSQL, ModelView):
         Company = pool.get('company.company')
 
         cursor = Transaction().connection.cursor()
-        table = backend.TableHandler(cls, module_name)
+        table = cls.__table_handler__(module_name)
         sql_table = cls.__table__()
         company_table = Company.__table__()
 
