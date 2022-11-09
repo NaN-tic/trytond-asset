@@ -67,13 +67,12 @@ class Asset(DeactivableMixin, ModelSQL, ModelView):
     'Asset'
     __name__ = 'asset'
     company = fields.Many2One('company.company', 'Company', required=True,
-        select=True,
         domain=[
             ('id', If(Eval('context', {}).contains('company'), '=', '!='),
                 Eval('context', {}).get('company', -1)),
             ])
     name = fields.Char('Name')
-    code = fields.Char('Code', required=True, select=True,
+    code = fields.Char('Code', required=True,
         states={
             'readonly': Eval('code_readonly', True),
             },
@@ -90,7 +89,7 @@ class Asset(DeactivableMixin, ModelSQL, ModelView):
         depends=['company'])
     type = fields.Selection([
             ('', ''),
-            ], 'Type', select=True)
+            ], 'Type')
     addresses = fields.One2Many('asset.address', 'asset', 'Addresses')
     current_address = fields.Function(fields.Many2One('party.address',
             'Current Address'), 'get_current_address',
