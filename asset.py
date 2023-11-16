@@ -85,7 +85,7 @@ class Asset(DeactivableMixin, ModelSQL, ModelView):
             ('type', 'in', ['assets', 'goods']),
             ],
         context={
-            'company': Eval('company'),
+            'company': Eval('company', -1),
             },
         depends=['company'])
     type = fields.Selection([
@@ -98,7 +98,7 @@ class Asset(DeactivableMixin, ModelSQL, ModelView):
     current_contact = fields.Function(fields.Many2One('party.party',
             "Current Contact",
         context={
-            'company': Eval('company'),
+            'company': Eval('company', -1),
             },
         depends=['company']), 'get_current_address',
         searcher='search_current_contact')
