@@ -18,13 +18,11 @@ class AssetAssignmentMixin(ModelSQL, ModelView):
     from_date = fields.Date('From Date',
         domain=[If(Bool(Eval('through_date')),
                 ('from_date', '<=', Eval('through_date')),
-                ())],
-        depends=['through_date'])
+                ())])
     through_date = fields.Date('Through Date',
         domain=[If(Bool(Eval('through_date')),
                 ('through_date', '>=', Eval('from_date')),
-                ())],
-        depends=['from_date'])
+                ())])
 
     @classmethod
     def __setup__(cls):
@@ -75,8 +73,7 @@ class Asset(DeactivableMixin, ModelSQL, ModelView):
     code = fields.Char('Code', required=True,
         states={
             'readonly': Eval('code_readonly', True),
-            },
-        depends=['code_readonly'])
+            })
     code_readonly = fields.Function(fields.Boolean('Code Readonly'),
         'get_code_readonly')
     product = fields.Many2One('product.product', 'Product',

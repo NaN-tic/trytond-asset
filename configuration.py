@@ -42,8 +42,7 @@ class ConfigurationSequence(ModelSQL, CompanyValueMixin):
         domain=[
             ('company', 'in', [Eval('company', -1), None]),
             ('sequence_type', '=', Id('asset', 'sequence_type_asset')),
-            ],
-        depends=['company'])
+            ])
 
     @classmethod
     def default_asset_sequence(cls):
