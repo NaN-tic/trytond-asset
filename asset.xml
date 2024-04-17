@@ -57,14 +57,14 @@
             <field name="act_window" ref="act_asset"/>
         </record>
         <record model="ir.model.access" id="access_asset">
-            <field name="model" search="[('model', '=', 'asset')]"/>
+            <field name="model">asset</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
         <record model="ir.model.access" id="access_asset_group_asset">
-            <field name="model" search="[('model', '=', 'asset')]"/>
+            <field name="model">asset</field>
             <field name="group" ref="group_asset"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -94,7 +94,7 @@
         </record>
         <record model="ir.rule.group" id="rule_group_asset">
             <field name="name"> Asset Rule Group Company </field>
-            <field name="model" search="[('model', '=', 'asset')]"/>
+            <field name="model">asset</field>
             <field name="global_p" eval="True"/>
         </record>
         <record model="ir.rule" id="rule_asset1">
