@@ -158,10 +158,6 @@ msgctxt "model:asset.configuration,name:"
 msgid "Asset Configuration"
 msgstr "Configuración activos"
 
-msgctxt "model:ir.action,name:"
-msgid "Asset Configuration"
-msgstr "Configuración activos"
-
 msgctxt "model:ir.action,name:act_asset"
 msgid "Asset"
 msgstr "Activo"
