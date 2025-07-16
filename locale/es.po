@@ -6,10 +6,6 @@ msgctxt "model:ir.message,text:dates_overlaps"
 msgid "\"%(first)s\" and \"%(second)s\" overlap."
 msgstr "\"%(first)s\" y \"%(second)s\" se superponen."
 
-msgctxt "error:asset:"
-msgid "The code of the asset must be unique."
-msgstr "El código del activo debe ser único."
-
 msgctxt "field:asset,active:"
 msgid "Active"
 msgstr "Activo"
