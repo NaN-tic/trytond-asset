@@ -8,10 +8,8 @@ from trytond.model import ModelSQL, ModelView, DeactivableMixin, fields, Unique
 from trytond.pool import Pool
 from trytond.pyson import Eval, If, Bool
 from trytond.transaction import Transaction
-from trytond.exceptions import UserError
+from trytond.model.exceptions import ValidationError
 from trytond.i18n import gettext
-
-__all__ = ['Asset', 'AssetAddress']
 
 
 class AssetAssignmentMixin(ModelSQL, ModelView):
@@ -56,7 +54,7 @@ class AssetAssignmentMixin(ModelSQL, ModelView):
         assignment = cursor.fetchone()
         if assignment:
             overlapping_period = self.__class__(assignment[0])
-            raise UserError(gettext('asset.dates_overlaps',
+            raise ValidationError(gettext('asset.dates_overlaps',
                     first=self.rec_name,
                     second=overlapping_period.rec_name))
 
