@@ -3,7 +3,6 @@
 from datetime import date
 from sql import Null
 
-from trytond import backend
 from trytond.model import ModelSQL, ModelView, DeactivableMixin, fields, Unique
 from trytond.pool import Pool
 from trytond.pyson import Eval, If, Bool
@@ -246,7 +245,7 @@ class AssetAddress(AssetAssignmentMixin):
         sql_table = cls.__table__()
         asset_table = Asset.__table__()
 
-        table = backend.TableHandler(Asset, module_name)
+        table = Asset.__table_handler__(module_name)
         address_exist = table.column_exist('address')
 
         # Migration: address Many2One replaced by One2Many
