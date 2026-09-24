@@ -6,17 +6,9 @@
         <record model="res.group" id="group_asset">
             <field name="name">Asset</field>
         </record>
-        <record model="res.user-res.group" id="user_admin_group_asset">
-            <field name="user" ref="res.user_admin"/>
-            <field name="group" ref="group_asset"/>
-        </record>
 
         <record model="res.group" id="group_asset_admin">
             <field name="name">Asset Administration</field>
-        </record>
-        <record model="res.user-res.group" id="user_admin_group_asset_admin">
-            <field name="user" ref="res.user_admin"/>
-            <field name="group" ref="group_asset_admin"/>
         </record>
 
        <record model="ir.ui.view" id="asset_view_form">
@@ -106,11 +98,6 @@
 
         <record model="ir.sequence.type" id="sequence_type_asset">
             <field name="name">Asset</field>
-        </record>
-        <record model="ir.sequence.type-res.group"
-            id="sequence_type_asset_group_admin">
-            <field name="sequence_type" ref="sequence_type_asset"/>
-            <field name="group" ref="res.group_admin"/>
         </record>
         <record model="ir.sequence.type-res.group"
             id="sequence_type_asset_group_asset_admin">
