@@ -207,15 +207,15 @@ class Asset(DeactivableMixin, ModelSQL, ModelView):
         return True
 
     @classmethod
-    def create(cls, vlist):
-        Configuration = Pool().get('asset.configuration')
+    def preprocess_values(cls, mode, values):
+        values = super().preprocess_values(mode, values)
+        if mode != 'create' or values.get('code'):
+            return values
 
-        vlist = [x.copy() for x in vlist]
-        for values in vlist:
-            if not values.get('code'):
-                config = Configuration(1)
-                values['code'] = config.asset_sequence.get()
-        return super(Asset, cls).create(vlist)
+        Configuration = Pool().get('asset.configuration')
+        config = Configuration(1)
+        values['code'] = config.asset_sequence.get()
+        return values
 
     @classmethod
     def copy(cls, assets, default=None):
